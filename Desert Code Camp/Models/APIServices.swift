@@ -16,10 +16,7 @@ class APIServices {
             UserDefaults.standard.string(forKey: "subdomain") != nil
         {
             print("got everything!")
-            let apiSettings = getAPISettings()
-            if let conferenceId = UserDefaults.standard.string(forKey: "conferenceId") {
-                getSessions(by: apiSettings.getSessionsByConferenceIdMethod, with: apiSettings.conferenceIdParameter, for: conferenceId, getSessionsHandler: { json, response in })
-            }
+            getSessionsByConferenceId(getSessionsHandler: { json, response in })
         } else {
             print("something is missing")
             getConferences(getConferencesHandler: { json, response in })
@@ -62,6 +59,15 @@ class APIServices {
         }
     }
     
+    static func getSessionsByConferenceId(getSessionsHandler: @escaping (JSON, HTTPURLResponse) -> Void) {
+        let apiSettings = getAPISettings()
+        if let conferenceId = UserDefaults.standard.string(forKey: "conferenceId") {
+            getSessions(by: apiSettings.getSessionsByConferenceIdMethod, with: apiSettings.conferenceIdParameter, for: conferenceId, getSessionsHandler: { json, response in
+                getSessionsHandler(json, response)
+            })
+        }
+    }
+    
     static func getSessions(by method: String, with parameter: String, for value: String, getSessionsHandler: @escaping (JSON, HTTPURLResponse) -> Void) {
         print("getting sessions")
         let apiSettings = getAPISettings()
@@ -71,9 +77,9 @@ class APIServices {
             request.httpMethod = "GET"
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             Network.callAPI(request: request, callAPIClosure: { json, response in
-                print("response: \(response.statusCode)")
-//                print("json: \(json)")
-                print("json: \(json.arrayValue.count)")
+//                print("response: \(response.statusCode)")
+//                print("json: \(json.arrayValue.count)")
+                getSessionsHandler(json, response)
             })
         }
     }

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		632FCBEF2334A01600CE5A89 /* DesertCodeCamp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 632FCBED2334A01600CE5A89 /* DesertCodeCamp.xcdatamodeld */; };
+		632FCBF923358C1900CE5A89 /* SessionsUpdatedEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632FCBF823358C1900CE5A89 /* SessionsUpdatedEvent.swift */; };
+		632FCBFB2337EC7100CE5A89 /* SessionDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632FCBFA2337EC7100CE5A89 /* SessionDetailTableViewController.swift */; };
+		6341A8E4232B626400022E57 /* SessionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6341A8E3232B626400022E57 /* SessionsTableViewController.swift */; };
 		63D787FD2325C1AE009F7D2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D787FC2325C1AE009F7D2A /* AppDelegate.swift */; };
 		63D788012325C1AE009F7D2A /* TracksTimesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D788002325C1AE009F7D2A /* TracksTimesTableViewController.swift */; };
 		63D788042325C1AE009F7D2A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D788022325C1AE009F7D2A /* Main.storyboard */; };
@@ -18,9 +22,18 @@
 		63D7881B2325C694009F7D2A /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7881A2325C694009F7D2A /* SwiftyJSON.swift */; };
 		63D7881D2325C6F0009F7D2A /* APIServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7881C2325C6F0009F7D2A /* APIServices.swift */; };
 		63D7881F2325C701009F7D2A /* CoreDataServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7881E2325C701009F7D2A /* CoreDataServices.swift */; };
+		7B10300A233974CE004A1625 /* PersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B103009233974CE004A1625 /* PersistentContainer.swift */; };
+		7B10301F233980AF004A1625 /* Sessions+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10301B233980AF004A1625 /* Sessions+CoreDataClass.swift */; };
+		7B103020233980AF004A1625 /* Sessions+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10301C233980AF004A1625 /* Sessions+CoreDataProperties.swift */; };
+		7B103021233980AF004A1625 /* Presenters+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10301D233980AF004A1625 /* Presenters+CoreDataClass.swift */; };
+		7B103022233980AF004A1625 /* Presenters+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10301E233980AF004A1625 /* Presenters+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		632FCBEE2334A01600CE5A89 /* DesertCodeCamp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DesertCodeCamp.xcdatamodel; sourceTree = "<group>"; };
+		632FCBF823358C1900CE5A89 /* SessionsUpdatedEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsUpdatedEvent.swift; sourceTree = "<group>"; };
+		632FCBFA2337EC7100CE5A89 /* SessionDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailTableViewController.swift; sourceTree = "<group>"; };
+		6341A8E3232B626400022E57 /* SessionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsTableViewController.swift; sourceTree = "<group>"; };
 		63D787F92325C1AE009F7D2A /* Desert Code Camp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Desert Code Camp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63D787FC2325C1AE009F7D2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63D788002325C1AE009F7D2A /* TracksTimesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracksTimesTableViewController.swift; sourceTree = "<group>"; };
@@ -34,6 +47,11 @@
 		63D7881A2325C694009F7D2A /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		63D7881C2325C6F0009F7D2A /* APIServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServices.swift; sourceTree = "<group>"; };
 		63D7881E2325C701009F7D2A /* CoreDataServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataServices.swift; sourceTree = "<group>"; };
+		7B103009233974CE004A1625 /* PersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentContainer.swift; sourceTree = "<group>"; };
+		7B10301B233980AF004A1625 /* Sessions+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sessions+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7B10301C233980AF004A1625 /* Sessions+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sessions+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7B10301D233980AF004A1625 /* Presenters+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Presenters+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7B10301E233980AF004A1625 /* Presenters+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Presenters+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +65,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		632FCBF02334A02600CE5A89 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				7B10301B233980AF004A1625 /* Sessions+CoreDataClass.swift */,
+				7B10301C233980AF004A1625 /* Sessions+CoreDataProperties.swift */,
+				7B10301D233980AF004A1625 /* Presenters+CoreDataClass.swift */,
+				7B10301E233980AF004A1625 /* Presenters+CoreDataProperties.swift */,
+				632FCBED2334A01600CE5A89 /* DesertCodeCamp.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		632FCBF723358BCB00CE5A89 /* Messaging */ = {
+			isa = PBXGroup;
+			children = (
+				632FCBF823358C1900CE5A89 /* SessionsUpdatedEvent.swift */,
+			);
+			path = Messaging;
+			sourceTree = "<group>";
+		};
 		63D787F02325C1AE009F7D2A = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +108,7 @@
 				63D788102325C1F3009F7D2A /* Models */,
 				63D788112325C1FD009F7D2A /* Views */,
 				63D788122325C20B009F7D2A /* Controllers */,
+				632FCBF723358BCB00CE5A89 /* Messaging */,
 				63D788132325C227009F7D2A /* Resources */,
 			);
 			path = "Desert Code Camp";
@@ -78,11 +117,13 @@
 		63D788102325C1F3009F7D2A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				632FCBF02334A02600CE5A89 /* CoreData */,
 				63D7881E2325C701009F7D2A /* CoreDataServices.swift */,
 				63D7881C2325C6F0009F7D2A /* APIServices.swift */,
 				63D788182325C510009F7D2A /* Network.swift */,
 				63D788162325C2A7009F7D2A /* API.swift */,
 				63D788142325C257009F7D2A /* api.plist */,
+				7B103009233974CE004A1625 /* PersistentContainer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -100,6 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				63D788002325C1AE009F7D2A /* TracksTimesTableViewController.swift */,
+				6341A8E3232B626400022E57 /* SessionsTableViewController.swift */,
+				632FCBFA2337EC7100CE5A89 /* SessionDetailTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -186,13 +229,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B103020233980AF004A1625 /* Sessions+CoreDataProperties.swift in Sources */,
+				632FCBEF2334A01600CE5A89 /* DesertCodeCamp.xcdatamodeld in Sources */,
+				7B10300A233974CE004A1625 /* PersistentContainer.swift in Sources */,
 				63D7881F2325C701009F7D2A /* CoreDataServices.swift in Sources */,
+				7B103022233980AF004A1625 /* Presenters+CoreDataProperties.swift in Sources */,
+				7B103021233980AF004A1625 /* Presenters+CoreDataClass.swift in Sources */,
+				632FCBF923358C1900CE5A89 /* SessionsUpdatedEvent.swift in Sources */,
 				63D788192325C510009F7D2A /* Network.swift in Sources */,
+				7B10301F233980AF004A1625 /* Sessions+CoreDataClass.swift in Sources */,
 				63D788012325C1AE009F7D2A /* TracksTimesTableViewController.swift in Sources */,
 				63D7881D2325C6F0009F7D2A /* APIServices.swift in Sources */,
+				632FCBFB2337EC7100CE5A89 /* SessionDetailTableViewController.swift in Sources */,
 				63D787FD2325C1AE009F7D2A /* AppDelegate.swift in Sources */,
 				63D7881B2325C694009F7D2A /* SwiftyJSON.swift in Sources */,
 				63D788172325C2A7009F7D2A /* API.swift in Sources */,
+				6341A8E4232B626400022E57 /* SessionsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,7 +389,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20190909.1;
+				CURRENT_PROJECT_VERSION = 20190924.1;
 				DEVELOPMENT_TEAM = V66UJ72Z63;
 				INFOPLIST_FILE = "Desert Code Camp/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -357,7 +409,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20190909.1;
+				CURRENT_PROJECT_VERSION = 20190924.1;
 				DEVELOPMENT_TEAM = V66UJ72Z63;
 				INFOPLIST_FILE = "Desert Code Camp/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -394,6 +446,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		632FCBED2334A01600CE5A89 /* DesertCodeCamp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				632FCBEE2334A01600CE5A89 /* DesertCodeCamp.xcdatamodel */,
+			);
+			currentVersion = 632FCBEE2334A01600CE5A89 /* DesertCodeCamp.xcdatamodel */;
+			path = DesertCodeCamp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 63D787F12325C1AE009F7D2A /* Project object */;
 }

@@ -63,6 +63,8 @@ class APIServices {
         let apiSettings = getAPISettings()
         if let conferenceId = UserDefaults.standard.string(forKey: "conferenceId") {
             getSessions(by: apiSettings.getSessionsByConferenceIdMethod, with: apiSettings.conferenceIdParameter, for: conferenceId, getSessionsHandler: { json, response in
+                let coreDataServices = CoreDataServices()
+                coreDataServices.updateSessions(json: json)
                 getSessionsHandler(json, response)
             })
         }
@@ -71,7 +73,7 @@ class APIServices {
     static func getSessions(by method: String, with parameter: String, for value: String, getSessionsHandler: @escaping (JSON, HTTPURLResponse) -> Void) {
         print("getting sessions")
         let apiSettings = getAPISettings()
-        if let url = URL(string: apiSettings.url + apiSettings.sessionEndPoint + method + "?" + parameter + "=" + value) {
+        if let url = URL(string: apiSettings.url + apiSettings.sessionEndPoint + method + "?" + parameter + "=" + "13") {
             print("url: \(url)")
             var request = URLRequest(url: url)
             request.httpMethod = "GET"

@@ -9,6 +9,11 @@
 import UIKit
 import CoreData
 
+protocol SessionsTableViewControllerDelegate {
+    func toggleLeftPanel()
+    func collapseSidePanels()
+}
+
 class SessionsTableViewController : UITableViewController {
     
     // MARK: - Variables
@@ -20,14 +25,19 @@ class SessionsTableViewController : UITableViewController {
     var keys = [String]()
     var sessionsDictionary = [String: [Sessions]]()
     var sessions = [Sessions]()
+    var delegate: SessionsTableViewControllerDelegate?
+    var isRootViewController = false
 
     // MARK: - Main Functions
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if isRootViewController {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(openMenu))
+        }
         navigationItem.backBarButtonItem?.title = filter
-        
+
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
         tableView.tableFooterView = UIView(frame: .zero)
@@ -47,6 +57,10 @@ class SessionsTableViewController : UITableViewController {
         title = filter
         
         loadSessions()
+    }
+    
+    @objc func openMenu() {
+        delegate?.toggleLeftPanel()
     }
     
     // MARK: - Core Data Fetching

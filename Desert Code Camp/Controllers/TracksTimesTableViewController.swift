@@ -9,6 +9,11 @@
 import UIKit
 import CoreData
 
+protocol TracksTimesTableViewControllerDelegate {
+    func toggleLeftPanel()
+    func collapseSidePanels()
+}
+
 class TracksTimesTableViewController: UITableViewController {
 
     // MARK: - Variables
@@ -16,8 +21,9 @@ class TracksTimesTableViewController: UITableViewController {
     var container: NSPersistentContainer!
     var filterPredicate: NSPredicate?
     var filters = [String]()
-    var filter = "tracks"
-    var trackTimesButton = UIBarButtonItem()
+    var filterType = "tracks"
+    var filterButton = UIBarButtonItem()
+    var delegate: TracksTimesTableViewControllerDelegate?
 
     // MARK: - Main Functions
     
@@ -40,19 +46,24 @@ class TracksTimesTableViewController: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(sessionsUpdated(notification:)), name: .sessionsUpdated, object: nil)
         
-        trackTimesButton = UIBarButtonItem(title: "by Times", style: .plain, target: self, action: #selector(changeFilter))
-        navigationItem.rightBarButtonItem = trackTimesButton
+        filterButton = UIBarButtonItem(title: "by Times", style: .plain, target: self, action: #selector(changeFilter))
+        navigationItem.rightBarButtonItem = filterButton
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(openMenu))
 
         loadFilters()
     }
     
+    @objc func openMenu() {
+        delegate?.toggleLeftPanel()
+    }
+    
     @objc func changeFilter() {
-        if filter == "tracks" {
-            trackTimesButton.title = "by Tracks"
-            filter = "times"
-        } else if filter == "times" {
-            trackTimesButton.title = "by Times"
-            filter = "tracks"
+        if filterType == "tracks" {
+            filterButton.title = "by Tracks"
+            filterType = "times"
+        } else if filterType == "times" {
+            filterButton.title = "by Times"
+            filterType = "tracks"
         }
         filters.removeAll()
         loadFilters()
@@ -68,8 +79,9 @@ class TracksTimesTableViewController: UITableViewController {
         if let cell = sender as? UITableViewCell {
             if let sessionsTableViewController = segue.destination as? SessionsTableViewController {
                 if let cellText = cell.textLabel?.text {
-                    sessionsTableViewController.filterType = filter
+                    sessionsTableViewController.filterType = filterType
                     sessionsTableViewController.filter = cellText
+                    sessionsTableViewController.isRootViewController = false
                 }
             }
         }
@@ -87,17 +99,17 @@ class TracksTimesTableViewController: UITableViewController {
         do {
             let sessions = try container.viewContext.fetch(request)
             for session in sessions {
-                if filter == "tracks" {
+                if filterType == "tracks" {
                     if !filters.contains(session.track) {
                         filters.append(session.track)
                     }
-                } else if filter == "times" {
+                } else if filterType == "times" {
                     if !filters.contains(session.time) {
                         filters.append(session.time)
                     }
                 }
             }
-            if filter == "tracks" {
+            if filterType == "tracks" {
                 filters.sort()
             }
             tableView.reloadData()

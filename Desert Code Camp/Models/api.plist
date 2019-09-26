@@ -14,5 +14,7 @@
 	<string>/Session</string>
 	<key>getSessionsByConferenceIdMethod</key>
 	<string>/GetSessionsByConferenceId</string>
+	<key>getMyInterestedInSessionsByLoginMethod</key>
+	<string>/GetMyInterestedInSessionsByLogin</string>
 </dict>
 </plist>

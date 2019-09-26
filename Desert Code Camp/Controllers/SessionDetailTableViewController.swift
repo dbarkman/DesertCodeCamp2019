@@ -18,6 +18,7 @@ class SessionDetailTableViewController: UITableViewController {
     var sessionName = String()
     var sessionId = Int16()
     var session = Sessions()
+    var sessions = [Sessions]()
     var presenters = [Presenters]()
     var presenterArray = [String]()
 
@@ -41,12 +42,31 @@ class SessionDetailTableViewController: UITableViewController {
         } catch {
             print("An error occured: \(error)")
         }
-
-//        title = sessionName
-        print("here 👍🏻 \(sessionId)")
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(sessionAction))
+
         loadSession()
         loadPresenters()
+    }
+    
+    @objc func sessionAction() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "Add to My Schedule", style: .default, handler: { _ in
+            print("add to my schedule tapped")
+            self.session.inMySchedule = true
+            self.sessions[0] = self.session
+            self.saveContext()
+        }))
+        alertController.addAction(UIAlertAction(title: "Post on Twitter", style: .default, handler: { _ in
+            print("tweet tapped")
+        }))
+        alertController.addAction(UIAlertAction(title: "Email Presenter", style: .default, handler: { _ in
+            print("email presenter tapped")
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+            print("cancel tapped")
+        }))
+        self.present(alertController, animated: true)
     }
 
     // MARK: - Core Data Fetching
@@ -59,7 +79,7 @@ class SessionDetailTableViewController: UITableViewController {
         request.predicate = sessionPredicate
 
         do {
-            let sessions = try container.viewContext.fetch(request)
+            sessions = try container.viewContext.fetch(request)
             session = sessions[0]
             print("session: \(sessions[0].name)")
             tableView.reloadData()
@@ -85,6 +105,16 @@ class SessionDetailTableViewController: UITableViewController {
             tableView.reloadData()
         } catch {
             print("Fetch failed 😭")
+        }
+    }
+    
+    func saveContext() {
+        if container.viewContext.hasChanges {
+            do {
+                try container.viewContext.save()
+            } catch {
+                print("An error occurred while saving: \(error)")
+            }
         }
     }
 }

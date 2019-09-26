@@ -48,9 +48,11 @@ class APIServices {
                     let conferenceId = currentConference["ConferenceId"].rawString()
                     let hashTag = currentConference["HashTag"].rawString()
                     let subdomain = currentConference["Subdomain"].rawString()
+                    let domain = currentConference["Domain"].rawString()
                     UserDefaults.standard.set(conferenceId, forKey: "conferenceId")
                     UserDefaults.standard.set(hashTag, forKey: "hashTag")
                     UserDefaults.standard.set(subdomain, forKey: "subdomain")
+                    UserDefaults.standard.set(domain, forKey: "domain")
                     getAllData()
                 }
 //                print("response: \(response.statusCode)")
@@ -60,6 +62,7 @@ class APIServices {
     }
     
     static func getSessionsByConferenceId(getSessionsHandler: @escaping (JSON, HTTPURLResponse) -> Void) {
+        print("getting sessions")
         let apiSettings = getAPISettings()
         if let conferenceId = UserDefaults.standard.string(forKey: "conferenceId") {
             getSessions(by: apiSettings.getSessionsByConferenceIdMethod, with: apiSettings.conferenceIdParameter, for: conferenceId, getSessionsHandler: { json, response in
@@ -70,10 +73,28 @@ class APIServices {
         }
     }
     
+    static func getMyInterestedInSessionsByLogin(getMyInterestedInSessionsByLoginHandler: @escaping (JSON, HTTPURLResponse) -> Void) {
+        print("getting my interested sessions")
+        if  let login = UserDefaults.standard.string(forKey: "login"),
+            let subdomain = UserDefaults.standard.string(forKey: "subdomain"),
+            let domain = UserDefaults.standard.string(forKey: "domain") {
+            if let url = URL(string: getAPISettings().url + getAPISettings().sessionEndPoint + getAPISettings().getMyInterestedInSessionsByLoginMethod + "?" + "login=" + login + "&" + "subdomain=" + subdomain  + "&" + "domain=" + domain) {
+                print("url: \(url)")
+                var request = URLRequest(url: url)
+                request.httpMethod = "GET"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                Network.callAPI(request: request, callAPIClosure: { json, response in
+                    print("response: \(response.statusCode)")
+                    print("json: \(json.arrayValue.count)")
+                    getMyInterestedInSessionsByLoginHandler(json, response)
+                })
+            }
+        }
+    }
+    
     static func getSessions(by method: String, with parameter: String, for value: String, getSessionsHandler: @escaping (JSON, HTTPURLResponse) -> Void) {
-        print("getting sessions")
         let apiSettings = getAPISettings()
-        if let url = URL(string: apiSettings.url + apiSettings.sessionEndPoint + method + "?" + parameter + "=" + "13") {
+        if let url = URL(string: apiSettings.url + apiSettings.sessionEndPoint + method + "?" + parameter + "=" + "13") { //fix this line to work for future conferences
             print("url: \(url)")
             var request = URLRequest(url: url)
             request.httpMethod = "GET"

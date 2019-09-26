@@ -13,4 +13,5 @@ struct API: Codable {
     var getConferencesMethod = ""
     var sessionEndPoint = ""
     var getSessionsByConferenceIdMethod = ""
+    var getMyInterestedInSessionsByLoginMethod = ""
 }

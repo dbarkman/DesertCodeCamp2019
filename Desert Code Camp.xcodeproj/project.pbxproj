@@ -11,6 +11,8 @@
 		632FCBF923358C1900CE5A89 /* SessionsUpdatedEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632FCBF823358C1900CE5A89 /* SessionsUpdatedEvent.swift */; };
 		632FCBFB2337EC7100CE5A89 /* SessionDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632FCBFA2337EC7100CE5A89 /* SessionDetailTableViewController.swift */; };
 		6341A8E4232B626400022E57 /* SessionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6341A8E3232B626400022E57 /* SessionsTableViewController.swift */; };
+		63577316233B3CAB00247CE1 /* SidePanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63577312233B3CAA00247CE1 /* SidePanelViewController.swift */; };
+		63577318233B3CAB00247CE1 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63577314233B3CAB00247CE1 /* ContainerViewController.swift */; };
 		63D787FD2325C1AE009F7D2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D787FC2325C1AE009F7D2A /* AppDelegate.swift */; };
 		63D788012325C1AE009F7D2A /* TracksTimesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D788002325C1AE009F7D2A /* TracksTimesTableViewController.swift */; };
 		63D788042325C1AE009F7D2A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D788022325C1AE009F7D2A /* Main.storyboard */; };
@@ -34,6 +36,8 @@
 		632FCBF823358C1900CE5A89 /* SessionsUpdatedEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsUpdatedEvent.swift; sourceTree = "<group>"; };
 		632FCBFA2337EC7100CE5A89 /* SessionDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailTableViewController.swift; sourceTree = "<group>"; };
 		6341A8E3232B626400022E57 /* SessionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsTableViewController.swift; sourceTree = "<group>"; };
+		63577312233B3CAA00247CE1 /* SidePanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidePanelViewController.swift; sourceTree = "<group>"; };
+		63577314233B3CAB00247CE1 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		63D787F92325C1AE009F7D2A /* Desert Code Camp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Desert Code Camp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63D787FC2325C1AE009F7D2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63D788002325C1AE009F7D2A /* TracksTimesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracksTimesTableViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +147,8 @@
 				63D788002325C1AE009F7D2A /* TracksTimesTableViewController.swift */,
 				6341A8E3232B626400022E57 /* SessionsTableViewController.swift */,
 				632FCBFA2337EC7100CE5A89 /* SessionDetailTableViewController.swift */,
+				63577314233B3CAB00247CE1 /* ContainerViewController.swift */,
+				63577312233B3CAA00247CE1 /* SidePanelViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -240,6 +246,8 @@
 				7B10301F233980AF004A1625 /* Sessions+CoreDataClass.swift in Sources */,
 				63D788012325C1AE009F7D2A /* TracksTimesTableViewController.swift in Sources */,
 				63D7881D2325C6F0009F7D2A /* APIServices.swift in Sources */,
+				63577318233B3CAB00247CE1 /* ContainerViewController.swift in Sources */,
+				63577316233B3CAB00247CE1 /* SidePanelViewController.swift in Sources */,
 				632FCBFB2337EC7100CE5A89 /* SessionDetailTableViewController.swift in Sources */,
 				63D787FD2325C1AE009F7D2A /* AppDelegate.swift in Sources */,
 				63D7881B2325C694009F7D2A /* SwiftyJSON.swift in Sources */,
@@ -389,7 +397,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20190924.1;
+				CURRENT_PROJECT_VERSION = 20190925.1;
 				DEVELOPMENT_TEAM = V66UJ72Z63;
 				INFOPLIST_FILE = "Desert Code Camp/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -409,7 +417,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20190924.1;
+				CURRENT_PROJECT_VERSION = 20190925.1;
 				DEVELOPMENT_TEAM = V66UJ72Z63;
 				INFOPLIST_FILE = "Desert Code Camp/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;

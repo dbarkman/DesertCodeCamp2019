@@ -18,7 +18,6 @@
 		63D787FD2325C1AE009F7D2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D787FC2325C1AE009F7D2A /* AppDelegate.swift */; };
 		63D788012325C1AE009F7D2A /* TracksTimesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D788002325C1AE009F7D2A /* TracksTimesTableViewController.swift */; };
 		63D788042325C1AE009F7D2A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D788022325C1AE009F7D2A /* Main.storyboard */; };
-		63D788062325C1B0009F7D2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63D788052325C1B0009F7D2A /* Assets.xcassets */; };
 		63D788092325C1B0009F7D2A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D788072325C1B0009F7D2A /* LaunchScreen.storyboard */; };
 		63D788152325C257009F7D2A /* api.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63D788142325C257009F7D2A /* api.plist */; };
 		63D788172325C2A7009F7D2A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D788162325C2A7009F7D2A /* API.swift */; };
@@ -26,6 +25,7 @@
 		63D7881B2325C694009F7D2A /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7881A2325C694009F7D2A /* SwiftyJSON.swift */; };
 		63D7881D2325C6F0009F7D2A /* APIServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7881C2325C6F0009F7D2A /* APIServices.swift */; };
 		63D7881F2325C701009F7D2A /* CoreDataServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D7881E2325C701009F7D2A /* CoreDataServices.swift */; };
+		63E867AA2341C2CE0070F38A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63E867A92341C2CE0070F38A /* Assets.xcassets */; };
 		7B10300A233974CE004A1625 /* PersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B103009233974CE004A1625 /* PersistentContainer.swift */; };
 		7B10301F233980AF004A1625 /* Sessions+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10301B233980AF004A1625 /* Sessions+CoreDataClass.swift */; };
 		7B103020233980AF004A1625 /* Sessions+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10301C233980AF004A1625 /* Sessions+CoreDataProperties.swift */; };
@@ -46,7 +46,6 @@
 		63D787FC2325C1AE009F7D2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63D788002325C1AE009F7D2A /* TracksTimesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracksTimesTableViewController.swift; sourceTree = "<group>"; };
 		63D788032325C1AE009F7D2A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		63D788052325C1B0009F7D2A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63D788082325C1B0009F7D2A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63D7880A2325C1B0009F7D2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63D788142325C257009F7D2A /* api.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = api.plist; sourceTree = "<group>"; };
@@ -55,6 +54,7 @@
 		63D7881A2325C694009F7D2A /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		63D7881C2325C6F0009F7D2A /* APIServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServices.swift; sourceTree = "<group>"; };
 		63D7881E2325C701009F7D2A /* CoreDataServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataServices.swift; sourceTree = "<group>"; };
+		63E867A92341C2CE0070F38A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../Clients/David/DesertCodeCampiOS/Assets.xcassets; sourceTree = "<group>"; };
 		7B103009233974CE004A1625 /* PersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentContainer.swift; sourceTree = "<group>"; };
 		7B10301B233980AF004A1625 /* Sessions+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sessions+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7B10301C233980AF004A1625 /* Sessions+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sessions+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -162,7 +162,7 @@
 		63D788132325C227009F7D2A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				63D788052325C1B0009F7D2A /* Assets.xcassets */,
+				63E867A92341C2CE0070F38A /* Assets.xcassets */,
 				63D7881A2325C694009F7D2A /* SwiftyJSON.swift */,
 				63D7880A2325C1B0009F7D2A /* Info.plist */,
 			);
@@ -229,8 +229,8 @@
 			files = (
 				63D788092325C1B0009F7D2A /* LaunchScreen.storyboard in Resources */,
 				63D788152325C257009F7D2A /* api.plist in Resources */,
-				63D788062325C1B0009F7D2A /* Assets.xcassets in Resources */,
 				63D788042325C1AE009F7D2A /* Main.storyboard in Resources */,
+				63E867AA2341C2CE0070F38A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

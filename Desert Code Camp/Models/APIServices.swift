@@ -49,14 +49,32 @@ class APIServices {
                     let hashTag = currentConference["HashTag"].rawString()
                     let subdomain = currentConference["Subdomain"].rawString()
                     let domain = currentConference["Domain"].rawString()
+                    let conferenceState = currentConference["State"]["StateId"].int
+                    let conferenceTitle = currentConference["ConferenceTitle"].rawString()
+                    let dateStart = currentConference["DateStart"].rawValue
+                    let dateEnd = currentConference["DateEnd"].rawValue
+                    let locationName = currentConference["Location"]["DisplayName"].rawString()
+                    let address1 = currentConference["Location"]["Address"]["Address1"].rawString()
+                    let address2 = currentConference["Location"]["Address"]["Address2"].rawString()
+                    let city = currentConference["Location"]["Address"]["City"].rawString()
+                    let state = currentConference["Location"]["Address"]["State"].rawString()
+                    let zip = currentConference["Location"]["Address"]["Zip"].rawString()
                     UserDefaults.standard.set(conferenceId, forKey: "conferenceId")
                     UserDefaults.standard.set(hashTag, forKey: "hashTag")
                     UserDefaults.standard.set(subdomain, forKey: "subdomain")
                     UserDefaults.standard.set(domain, forKey: "domain")
+                    UserDefaults.standard.set(conferenceState, forKey: "conferenceState")
+                    UserDefaults.standard.set(conferenceTitle, forKey: "conferenceTitle")
+                    UserDefaults.standard.set(dateStart, forKey: "dateStart")
+                    UserDefaults.standard.set(dateEnd, forKey: "dateEnd")
+                    UserDefaults.standard.set(locationName, forKey: "locationName")
+                    UserDefaults.standard.set(address1, forKey: "address1")
+                    UserDefaults.standard.set(address2, forKey: "address2")
+                    UserDefaults.standard.set(city, forKey: "city")
+                    UserDefaults.standard.set(state, forKey: "state")
+                    UserDefaults.standard.set(zip, forKey: "zip")
                     getAllData()
                 }
-//                print("response: \(response.statusCode)")
-//                print("json: \(json)")
             })
         }
     }
@@ -89,12 +107,35 @@ class APIServices {
                     getMyInterestedInSessionsByLoginHandler(json, response)
                 })
             }
+        } else {
+            NotificationCenter.default.post(name: .needLogin, object: nil)
+        }
+    }
+    
+    static func getMyPresentationsByLogin(getMyPresentationsByLoginHandler: @escaping (JSON, HTTPURLResponse) -> Void) {
+        print("getting my presenting sessions")
+        if  let login = UserDefaults.standard.string(forKey: "login"),
+            let subdomain = UserDefaults.standard.string(forKey: "subdomain"),
+            let domain = UserDefaults.standard.string(forKey: "domain") {
+            if let url = URL(string: getAPISettings().url + getAPISettings().sessionEndPoint + getAPISettings().getMyPresentationsByLoginMethod + "?" + "login=" + login + "&" + "subdomain=" + subdomain  + "&" + "domain=" + domain) {
+                print("url: \(url)")
+                var request = URLRequest(url: url)
+                request.httpMethod = "GET"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                Network.callAPI(request: request, callAPIClosure: { json, response in
+                    print("response: \(response.statusCode)")
+                    print("json: \(json.arrayValue.count)")
+                    getMyPresentationsByLoginHandler(json, response)
+                })
+            }
+        } else {
+            NotificationCenter.default.post(name: .needLogin, object: nil)
         }
     }
     
     static func getSessions(by method: String, with parameter: String, for value: String, getSessionsHandler: @escaping (JSON, HTTPURLResponse) -> Void) {
         let apiSettings = getAPISettings()
-        if let url = URL(string: apiSettings.url + apiSettings.sessionEndPoint + method + "?" + parameter + "=" + "13") { //fix this line to work for future conferences
+        if let url = URL(string: apiSettings.url + apiSettings.sessionEndPoint + method + "?" + parameter + "=" + value) { //fix this line to work for future conferences
             print("url: \(url)")
             var request = URLRequest(url: url)
             request.httpMethod = "GET"

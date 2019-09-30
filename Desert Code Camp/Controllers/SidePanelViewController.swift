@@ -29,7 +29,7 @@
 import UIKit
 
 protocol SidePanelViewControllerDelegate {
-    func didSelectOption(_ option: String)
+    func didSelectOption(_ option: String, _ row: Int)
 }
 
 class SidePanelViewController: UITableViewController {
@@ -40,8 +40,18 @@ class SidePanelViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        options = ["All Sessions", "My Sessions", "My Schedule"]
-        
+        var hashTag = ""
+        var conferenceTitle = ""
+        if let tempHashTag = UserDefaults.standard.string(forKey: "hashTag"), let tempConferenceTitle = UserDefaults.standard.string(forKey: "conferenceTitle") {
+            hashTag = tempHashTag + " "
+            conferenceTitle = tempConferenceTitle
+        }
+        options = [conferenceTitle, "All " + hashTag + "Sessions", " > by Tracks", " > by Times", "Sessions I Marked as Interested", "Sessions I'm Presenting", "My Schedule", "When and Where", "Code of Conduct", "About", "Credits", "Logout"]
+
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 44
+        tableView.tableFooterView = UIView(frame: .zero)
+
         tableView.reloadData()
     }
 }
@@ -54,16 +64,18 @@ extension SidePanelViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AnimalCell", for: indexPath)
+        cell.selectionStyle = .default
+        if indexPath.row == 0 {
+            cell.selectionStyle = .none
+        }
         cell.textLabel?.text = options[indexPath.row]
         return cell
     }
-}
 
-// Mark: Table View Delegate
-
-extension SidePanelViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let option = options[indexPath.row]
-        delegate?.didSelectOption(option)
+        if indexPath.row > 0 {
+            let option = options[indexPath.row]
+            delegate?.didSelectOption(option, indexPath.row)
+        }
     }
 }

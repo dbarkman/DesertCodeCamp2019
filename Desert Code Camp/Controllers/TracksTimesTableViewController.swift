@@ -24,6 +24,7 @@ class TracksTimesTableViewController: UITableViewController {
     var filterType = "tracks"
     var filterButton = UIBarButtonItem()
     var delegate: TracksTimesTableViewControllerDelegate?
+    let tracksTimesRefreshControl = UIRefreshControl()
 
     // MARK: - Main Functions
     
@@ -33,7 +34,7 @@ class TracksTimesTableViewController: UITableViewController {
         do {
             try container = PersistentContainer.container(name: "DesertCodeCamp")
             container.loadPersistentStores { storeDescription, error in
-                self.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                self.container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
                 if let error = error {
                     print("Unresolved error \(error)")
                 }
@@ -45,14 +46,48 @@ class TracksTimesTableViewController: UITableViewController {
         title = "Desert Code Camp"
         
         NotificationCenter.default.addObserver(self, selector: #selector(sessionsUpdated(notification:)), name: .sessionsUpdated, object: nil)
-        
-        filterButton = UIBarButtonItem(title: "by Times", style: .plain, target: self, action: #selector(changeFilter))
-        navigationItem.rightBarButtonItem = filterButton
+
+        let actionButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(sendTweet))
+        navigationItem.rightBarButtonItem = actionButton
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(openMenu))
+                
+        tableView.refreshControl = tracksTimesRefreshControl
+        tracksTimesRefreshControl.addTarget(self, action: #selector(refreshTracksTimes(_:)), for: .valueChanged)
+        
+        setupToolbar()
 
         loadFilters()
     }
     
+    func setupToolbar() {
+        let toolbar = UIToolbar()
+        filterButton = UIBarButtonItem(title: "by Times", style: .plain, target: self, action: #selector(changeFilter))
+        toolbar.setItems([filterButton], animated: false)
+        view.addSubview(toolbar)
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        let guide = self.view.safeAreaLayoutGuide
+        toolbar.trailingAnchor.constraint(equalTo: guide.trailingAnchor).isActive = true
+        toolbar.leadingAnchor.constraint(equalTo: guide.leadingAnchor).isActive = true
+        toolbar.bottomAnchor.constraint(equalTo: guide.bottomAnchor).isActive = true
+        toolbar.heightAnchor.constraint(equalToConstant: 44).isActive = true
+    }
+    
+    @objc func sendTweet() {
+        var share = ""
+        if let hashTag = UserDefaults.standard.string(forKey: "hashTag") {
+            share = hashTag
+        }
+        let activityViewController = UIActivityViewController(activityItems: [share], applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+
+    @objc func refreshTracksTimes(_ sender: Any) {
+        filters.removeAll()
+        loadFilters()
+        self.tracksTimesRefreshControl.endRefreshing()
+    }
+
     @objc func openMenu() {
         delegate?.toggleLeftPanel()
     }
@@ -65,8 +100,7 @@ class TracksTimesTableViewController: UITableViewController {
             filterButton.title = "by Times"
             filterType = "tracks"
         }
-        filters.removeAll()
-        loadFilters()
+        refreshTracksTimes(self)
     }
     
     @objc func sessionsUpdated(notification: NSNotification) {

@@ -38,6 +38,7 @@ class ContainerViewController: UIViewController {
     var centerNavigationController: UINavigationController!
     var tracksTimesTableViewController: TracksTimesTableViewController!
     var sessionsTableViewController: SessionsTableViewController!
+    var aboutViewController: AboutViewController!
 
     var currentState: SlideOutState = .bothCollapsed {
         didSet {
@@ -61,9 +62,6 @@ class ContainerViewController: UIViewController {
         
         centerNavigationController.didMove(toParent: self)
         centerNavigationController.navigationBar.prefersLargeTitles = true
-        
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-        centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
     }
 }
 
@@ -81,11 +79,15 @@ private extension UIStoryboard {
     static func sessionsTableViewController() -> SessionsTableViewController? {
         return mainStoryboard().instantiateViewController(withIdentifier: "sessions") as? SessionsTableViewController
     }
+    
+    static func aboutViewController() -> AboutViewController? {
+        return mainStoryboard().instantiateViewController(withIdentifier: "about") as? AboutViewController
+    }
 }
 
 // MARK: CenterViewController delegate
 
-extension ContainerViewController: TracksTimesTableViewControllerDelegate, SessionsTableViewControllerDelegate {
+extension ContainerViewController: TracksTimesTableViewControllerDelegate, SessionsTableViewControllerDelegate, AboutViewControllerDelegate {
     func toggleLeftPanel() {
         let notAlreadyExpanded = (currentState != .leftPanelExpanded)
         
@@ -108,8 +110,7 @@ extension ContainerViewController: TracksTimesTableViewControllerDelegate, Sessi
     func animateLeftPanel(shouldExpand: Bool) {
         if shouldExpand {
             currentState = .leftPanelExpanded
-            animateCenterPanelXPosition(
-                targetPosition: centerNavigationController.view.frame.width - centerPanelExpandedOffset)
+            animateCenterPanelXPosition(targetPosition: centerNavigationController.view.frame.width - centerPanelExpandedOffset)
         } else {
             animateCenterPanelXPosition(targetPosition: 0) { _ in
                 self.currentState = .bothCollapsed
@@ -129,12 +130,8 @@ extension ContainerViewController: TracksTimesTableViewControllerDelegate, Sessi
     }
     
     func animateCenterPanelXPosition(targetPosition: CGFloat, completion: ((Bool) -> Void)? = nil) {
-        UIView.animate(withDuration: 0.5,
-                       delay: 0,
-                       usingSpringWithDamping: 0.8,
-                       initialSpringVelocity: 0,
-                       options: .curveEaseInOut, animations: {
-                        self.centerNavigationController.view.frame.origin.x = targetPosition
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+            self.centerNavigationController.view.frame.origin.x = targetPosition
         }, completion: completion)
     }
     
@@ -155,62 +152,89 @@ extension ContainerViewController: TracksTimesTableViewControllerDelegate, Sessi
     }
 }
 
-// MARK: Gesture recognizer
-
-extension ContainerViewController: UIGestureRecognizerDelegate {
-    @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
-        let gestureIsDraggingFromLeftToRight = (recognizer.velocity(in: view).x > 0)
-        
-        switch recognizer.state {
-        case .began:
-            if currentState == .bothCollapsed {
-                if gestureIsDraggingFromLeftToRight {
-                    addLeftPanelViewController()
-                }
-                showShadowForCenterViewController(true)
-            }
-            
-        case .changed:
-            if let rview = recognizer.view {
-                rview.center.x = rview.center.x + recognizer.translation(in: view).x
-                recognizer.setTranslation(CGPoint.zero, in: view)
-            }
-            
-        case .ended:
-            if let _ = leftViewController,
-                let rview = recognizer.view {
-                // animate the side panel open or closed based on whether the view
-                // has moved more or less than halfway
-                let hasMovedGreaterThanHalfway = rview.center.x > view.bounds.size.width
-                animateLeftPanel(shouldExpand: hasMovedGreaterThanHalfway)
-            }
-            
-        default:
-            break
-        }
-    }
-}
-
 extension ContainerViewController: SidePanelViewControllerDelegate {
-    func didSelectOption(_ option: String) {
-        print("Option selected (container): \(option)")
+    func didSelectOption(_ option: String, _ row: Int) {
+        print("Option selected (container): \(option), row: \(row)")
         collapseSidePanels()
-        switch option {
-        case "All Sessions":
+        let aboutViewsText = AboutViewText()
+        switch row {
+        case 1:
             print("All Sessions")
             tracksTimesTableViewController = UIStoryboard.tracksTimesTableViewController()
             tracksTimesTableViewController.delegate = self
             centerNavigationController.setViewControllers([tracksTimesTableViewController], animated: false)
-        case "My Sessions":
-            print("My Sessions")
+        case 2:
+            print(" > by Tracks")
+            tracksTimesTableViewController = UIStoryboard.tracksTimesTableViewController()
+            tracksTimesTableViewController.delegate = self
+            centerNavigationController.setViewControllers([tracksTimesTableViewController], animated: false)
+        case 3:
+            print(" > by Times")
+            tracksTimesTableViewController = UIStoryboard.tracksTimesTableViewController()
+            tracksTimesTableViewController.delegate = self
+            tracksTimesTableViewController.filterType = "times"
+            centerNavigationController.setViewControllers([tracksTimesTableViewController], animated: false)
+        case 4:
+            print("Sessions I Marked as Interested")
             sessionsTableViewController = UIStoryboard.sessionsTableViewController()
             sessionsTableViewController.isRootViewController = true
             sessionsTableViewController.delegate = self
             sessionsTableViewController.filterType = "tracks"
-            sessionsTableViewController.filter = "Cloud"
+            sessionsTableViewController.selectedView = "interestedSessions"
+            sessionsTableViewController.filter = "Interested Sessions"
             centerNavigationController.setViewControllers([sessionsTableViewController], animated: false)
-        case "My Schedule":
+        case 5:
+            print("Sessions I'm Presenting")
+            sessionsTableViewController = UIStoryboard.sessionsTableViewController()
+            sessionsTableViewController.isRootViewController = true
+            sessionsTableViewController.delegate = self
+            sessionsTableViewController.filterType = "tracks"
+            sessionsTableViewController.selectedView = "presentingSessions"
+            sessionsTableViewController.filter = "Presenting Sessions"
+            centerNavigationController.setViewControllers([sessionsTableViewController], animated: false)
+        case 6:
             print("My Schedule")
+            sessionsTableViewController = UIStoryboard.sessionsTableViewController()
+            sessionsTableViewController.isRootViewController = true
+            sessionsTableViewController.delegate = self
+            sessionsTableViewController.filterType = "tracks"
+            sessionsTableViewController.selectedView = "mySchedule"
+            sessionsTableViewController.filter = "My Schedule"
+            centerNavigationController.setViewControllers([sessionsTableViewController], animated: false)
+        case 7:
+            print("When and Where")
+            aboutViewController = UIStoryboard.aboutViewController()
+            aboutViewController.delegate = self
+            aboutViewController.viewTitle = option
+            aboutViewController.content = aboutViewsText.whenWhereAttributedString
+            centerNavigationController.setViewControllers([aboutViewController], animated: false)
+        case 8:
+            print("Code of Conduct")
+            aboutViewController = UIStoryboard.aboutViewController()
+            aboutViewController.delegate = self
+            aboutViewController.viewTitle = option
+            aboutViewController.content = aboutViewsText.codeOfConductAttributedString
+            centerNavigationController.setViewControllers([aboutViewController], animated: false)
+        case 9:
+            print("About")
+            aboutViewController = UIStoryboard.aboutViewController()
+            aboutViewController.delegate = self
+            aboutViewController.viewTitle = option
+            aboutViewController.content = aboutViewsText.aboutAttributedString
+            centerNavigationController.setViewControllers([aboutViewController], animated: false)
+        case 10:
+            print("Credits")
+            aboutViewController = UIStoryboard.aboutViewController()
+            aboutViewController.delegate = self
+            aboutViewController.viewTitle = option
+            aboutViewController.content = aboutViewsText.creditsAttributedString
+            centerNavigationController.setViewControllers([aboutViewController], animated: false)
+        case 11:
+            print("Logout")
+            UserDefaults.standard.set(nil, forKey: "login")
+            let alertController = UIAlertController(title: "Logout", message: "Your DesertCodeCamp.com login has been removed.", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            present(alertController, animated: true)
         default:
             print("problems")
         }

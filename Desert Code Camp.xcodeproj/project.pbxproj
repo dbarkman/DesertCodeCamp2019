@@ -15,7 +15,6 @@
 		63577316233B3CAB00247CE1 /* SidePanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63577312233B3CAA00247CE1 /* SidePanelViewController.swift */; };
 		63577318233B3CAB00247CE1 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63577314233B3CAB00247CE1 /* ContainerViewController.swift */; };
 		63A52D18233F1E1B00D4DD74 /* AboutViewText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A52D17233F1E1B00D4DD74 /* AboutViewText.swift */; };
-		63B415BC233DDCF800608F7B /* WhenAndWhereViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B415BB233DDCF800608F7B /* WhenAndWhereViewController.swift */; };
 		63D787FD2325C1AE009F7D2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D787FC2325C1AE009F7D2A /* AppDelegate.swift */; };
 		63D788012325C1AE009F7D2A /* TracksTimesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D788002325C1AE009F7D2A /* TracksTimesTableViewController.swift */; };
 		63D788042325C1AE009F7D2A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D788022325C1AE009F7D2A /* Main.storyboard */; };
@@ -43,7 +42,6 @@
 		63577312233B3CAA00247CE1 /* SidePanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidePanelViewController.swift; sourceTree = "<group>"; };
 		63577314233B3CAB00247CE1 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		63A52D17233F1E1B00D4DD74 /* AboutViewText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewText.swift; sourceTree = "<group>"; };
-		63B415BB233DDCF800608F7B /* WhenAndWhereViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhenAndWhereViewController.swift; sourceTree = "<group>"; };
 		63D787F92325C1AE009F7D2A /* Desert Code Camp 2019.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Desert Code Camp 2019.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63D787FC2325C1AE009F7D2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63D788002325C1AE009F7D2A /* TracksTimesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracksTimesTableViewController.swift; sourceTree = "<group>"; };
@@ -157,7 +155,6 @@
 				63577314233B3CAB00247CE1 /* ContainerViewController.swift */,
 				63577312233B3CAA00247CE1 /* SidePanelViewController.swift */,
 				6333A2B1233DD024002D9CDA /* AboutViewController.swift */,
-				63B415BB233DDCF800608F7B /* WhenAndWhereViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -244,7 +241,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63B415BC233DDCF800608F7B /* WhenAndWhereViewController.swift in Sources */,
 				7B103020233980AF004A1625 /* Sessions+CoreDataProperties.swift in Sources */,
 				632FCBEF2334A01600CE5A89 /* DesertCodeCamp.xcdatamodeld in Sources */,
 				7B10300A233974CE004A1625 /* PersistentContainer.swift in Sources */,

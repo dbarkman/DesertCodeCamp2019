@@ -46,7 +46,7 @@ class SidePanelViewController: UITableViewController {
             hashTag = tempHashTag + " "
             conferenceTitle = tempConferenceTitle
         }
-        options = [conferenceTitle, "All " + hashTag + "Sessions", " > by Tracks", " > by Times", "Sessions I Marked as Interested", "Sessions I'm Presenting", "My Schedule", "When and Where", "Code of Conduct", "About", "Credits", "Logout"]
+        options = [conferenceTitle, "All " + hashTag + "Sessions", " > by Tracks", " > by Times", "Sessions I Want to Attend", "Sessions I'm Presenting", "My Schedule", "When and Where", "Code of Conduct", "About", "Credits", "Logout"]
 
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
@@ -63,7 +63,7 @@ extension SidePanelViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AnimalCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.selectionStyle = .default
         if indexPath.row == 0 {
             cell.selectionStyle = .none

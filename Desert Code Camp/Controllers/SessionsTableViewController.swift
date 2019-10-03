@@ -46,7 +46,6 @@ class SessionsTableViewController : UITableViewController {
         navigationItem.rightBarButtonItem = actionButton
 
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 44
         tableView.tableFooterView = UIView(frame: .zero)
 
         do {
@@ -65,21 +64,16 @@ class SessionsTableViewController : UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(needLogin(notification:)), name: .needLogin, object: nil)
         
-        setupToolbar()
-        
+        navigationController?.isToolbarHidden = false
+        toolbarItems = [UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshView))]
+
         checkView()
     }
-    
-    func setupToolbar() {
-        let toolbar = UIToolbar()
-        toolbar.setItems([UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshView))], animated: false)
-        view.addSubview(toolbar)
-        toolbar.translatesAutoresizingMaskIntoConstraints = false
-        let guide = self.view.safeAreaLayoutGuide
-        toolbar.trailingAnchor.constraint(equalTo: guide.trailingAnchor).isActive = true
-        toolbar.leadingAnchor.constraint(equalTo: guide.leadingAnchor).isActive = true
-        toolbar.bottomAnchor.constraint(equalTo: guide.bottomAnchor).isActive = true
-        toolbar.heightAnchor.constraint(equalToConstant: 44).isActive = true
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        refreshView()
     }
     
     @objc func sendTweet() {
@@ -126,6 +120,8 @@ class SessionsTableViewController : UITableViewController {
 
     func loadSessions() {
         print("loading sessions")
+        sessionsDictionary.removeAll()
+        keys.removeAll()
         let request = Sessions.createFetchRequest()
         let sort = NSSortDescriptor(key: "startDate", ascending: true)
         request.sortDescriptors = [sort]
@@ -350,22 +346,28 @@ extension SessionsTableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         if selectedView == "mySchedule" {
-            let indexPaths = [indexPath]
-            let title = keys[indexPath.section]
-            if var tempArray = sessionsDictionary[title] {
-                let session = tempArray[indexPath.row]
-                session.inMySchedule = false
-                tempArray.remove(at: indexPath.row)
-                sessionsDictionary[title] = tempArray
-                if let index = sessions.firstIndex(of: session) {
-                    sessions[index] = session
-                    self.saveContext()
-                }
-            }
-            tableView.deleteRows(at: indexPaths, with: .fade)
-            refreshView()
+            return .delete
+        } else {
+            return .none
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let indexPaths = [indexPath]
+        let title = keys[indexPath.section]
+        if var tempArray = sessionsDictionary[title] {
+            let session = tempArray[indexPath.row]
+            session.inMySchedule = false
+            tempArray.remove(at: indexPath.row)
+            sessionsDictionary[title] = tempArray
+            if let index = sessions.firstIndex(of: session) {
+                sessions[index] = session
+                self.saveContext()
+            }
+        }
+        tableView.deleteRows(at: indexPaths, with: .fade)
+        refreshView()
     }
 }

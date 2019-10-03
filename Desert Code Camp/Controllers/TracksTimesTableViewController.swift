@@ -22,6 +22,7 @@ class TracksTimesTableViewController: UITableViewController {
     var filterPredicate: NSPredicate?
     var filters = [String]()
     var filterType = "tracks"
+    var filterButtonTitle = "by Times"
     var filterButton = UIBarButtonItem()
     var delegate: TracksTimesTableViewControllerDelegate?
     let tracksTimesRefreshControl = UIRefreshControl()
@@ -31,6 +32,9 @@ class TracksTimesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.tableFooterView = UIView(frame: .zero)
+
         do {
             try container = PersistentContainer.container(name: "DesertCodeCamp")
             container.loadPersistentStores { storeDescription, error in
@@ -54,22 +58,15 @@ class TracksTimesTableViewController: UITableViewController {
         tableView.refreshControl = tracksTimesRefreshControl
         tracksTimesRefreshControl.addTarget(self, action: #selector(refreshTracksTimes(_:)), for: .valueChanged)
         
-        setupToolbar()
+        filterButton = UIBarButtonItem(title: filterButtonTitle, style: .plain, target: self, action: #selector(changeFilter))
+        navigationController?.isToolbarHidden = false
+        toolbarItems = [filterButton]
 
         loadFilters()
     }
     
-    func setupToolbar() {
-        let toolbar = UIToolbar()
-        filterButton = UIBarButtonItem(title: "by Times", style: .plain, target: self, action: #selector(changeFilter))
-        toolbar.setItems([filterButton], animated: false)
-        view.addSubview(toolbar)
-        toolbar.translatesAutoresizingMaskIntoConstraints = false
-        let guide = self.view.safeAreaLayoutGuide
-        toolbar.trailingAnchor.constraint(equalTo: guide.trailingAnchor).isActive = true
-        toolbar.leadingAnchor.constraint(equalTo: guide.leadingAnchor).isActive = true
-        toolbar.bottomAnchor.constraint(equalTo: guide.bottomAnchor).isActive = true
-        toolbar.heightAnchor.constraint(equalToConstant: 44).isActive = true
+    @objc func sessionsUpdated(notification: NSNotification) {
+        loadFilters()
     }
     
     @objc func sendTweet() {
@@ -82,16 +79,16 @@ class TracksTimesTableViewController: UITableViewController {
         self.present(activityViewController, animated: true, completion: nil)
     }
 
+    @objc func openMenu() {
+        delegate?.toggleLeftPanel()
+    }
+    
     @objc func refreshTracksTimes(_ sender: Any) {
         filters.removeAll()
         loadFilters()
         self.tracksTimesRefreshControl.endRefreshing()
     }
 
-    @objc func openMenu() {
-        delegate?.toggleLeftPanel()
-    }
-    
     @objc func changeFilter() {
         if filterType == "tracks" {
             filterButton.title = "by Tracks"
@@ -101,24 +98,6 @@ class TracksTimesTableViewController: UITableViewController {
             filterType = "tracks"
         }
         refreshTracksTimes(self)
-    }
-    
-    @objc func sessionsUpdated(notification: NSNotification) {
-        print("sessions updated, reloading table")
-        loadFilters()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-        if let cell = sender as? UITableViewCell {
-            if let sessionsTableViewController = segue.destination as? SessionsTableViewController {
-                if let cellText = cell.textLabel?.text {
-                    sessionsTableViewController.filterType = filterType
-                    sessionsTableViewController.filter = cellText
-                    sessionsTableViewController.isRootViewController = false
-                }
-            }
-        }
     }
     
     // MARK: - Core Data Fetching
@@ -149,6 +128,19 @@ class TracksTimesTableViewController: UITableViewController {
             tableView.reloadData()
         } catch {
             print("Fetch failed 😭")
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        if let cell = sender as? UITableViewCell {
+            if let sessionsTableViewController = segue.destination as? SessionsTableViewController {
+                if let cellText = cell.textLabel?.text {
+                    sessionsTableViewController.filterType = filterType
+                    sessionsTableViewController.filter = cellText
+                    sessionsTableViewController.isRootViewController = false
+                }
+            }
         }
     }
 }

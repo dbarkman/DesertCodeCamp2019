@@ -11,9 +11,9 @@
         <!--Tracks Times Table View Controller-->
         <scene sceneID="NdS-3x-Q5Y">
             <objects>
-                <tableViewController storyboardIdentifier="tracksTimes" id="687-nF-S0r" customClass="TracksTimesTableViewController" customModule="Desert_Code_Camp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="tracksTimes" id="687-nF-S0r" customClass="TracksTimesTableViewController" customModule="Desert_Code_Camp_2019" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="2DC-mM-4b0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
@@ -37,6 +37,7 @@
                     <navigationItem key="navigationItem" id="VLx-5b-jEi">
                         <barButtonItem key="backBarButtonItem" title="Back" id="S4d-xk-7jX"/>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1yl-Uu-M9f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -45,9 +46,9 @@
         <!--Sessions Table View Controller-->
         <scene sceneID="A50-eE-JNi">
             <objects>
-                <tableViewController storyboardIdentifier="sessions" id="RlD-L4-rKP" customClass="SessionsTableViewController" customModule="Desert_Code_Camp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="sessions" id="RlD-L4-rKP" customClass="SessionsTableViewController" customModule="Desert_Code_Camp_2019" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="b53-Hk-CoC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
@@ -68,6 +69,7 @@
                     <navigationItem key="navigationItem" id="0rh-mQ-Gnn">
                         <barButtonItem key="backBarButtonItem" title="Back" id="w0i-bc-nHS"/>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WYU-Ek-X3e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -76,9 +78,9 @@
         <!--Session Detail Table View Controller-->
         <scene sceneID="1B9-Yf-GUG">
             <objects>
-                <tableViewController storyboardIdentifier="sessionDetail" id="WUg-m2-rf4" customClass="SessionDetailTableViewController" customModule="Desert_Code_Camp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="sessionDetail" id="WUg-m2-rf4" customClass="SessionDetailTableViewController" customModule="Desert_Code_Camp_2019" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ual-nu-fpl">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
@@ -97,6 +99,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="VnZ-JM-edw"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bj1-mo-tRs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -105,7 +108,7 @@
         <!--About View Controller-->
         <scene sceneID="ke4-rh-oxA">
             <objects>
-                <viewController storyboardIdentifier="about" id="MXV-Pn-Ybt" customClass="AboutViewController" customModule="Desert_Code_Camp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="about" id="MXV-Pn-Ybt" customClass="AboutViewController" customModule="Desert_Code_Camp_2019" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BcN-H9-FGa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -151,13 +154,13 @@
         <!--Side Panel View Controller-->
         <scene sceneID="pW4-3r-tLN">
             <objects>
-                <tableViewController storyboardIdentifier="LeftViewController" id="rUo-C0-3Ka" customClass="SidePanelViewController" customModule="Desert_Code_Camp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="LeftViewController" id="rUo-C0-3Ka" customClass="SidePanelViewController" customModule="Desert_Code_Camp_2019" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Gjm-h6-NVn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AnimalCell" id="TAa-WA-Nlq">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="TAa-WA-Nlq">
                                 <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TAa-WA-Nlq" id="hl6-Nc-pyY">

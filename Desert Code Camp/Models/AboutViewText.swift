@@ -33,7 +33,7 @@ class AboutViewText {
         interestedPreLoginString =
             "This screen will display sessions you've marked as Interested on the DesertCodeCamp.com website. In order to view those sessions, tap the \"Enter Username\" button below and enter your DesertCodeCamp.com username on the popup screen."
         interestedString =
-            "This screen will display sessions you've marked as Interested on the DesertCodeCamp.com website. In order to mark sessions as Interested,  log in to your account, or create a new account, at DesertCodeCamp.com. When viewing the list of sessions, click the \"More Info\" button, review the session, and if interested, set \"I want to attend this\" to \"Yes\" and click \"Save\". Once you've marked some sessions as Interested, return here and tap the Refresh button."
+            "This screen will display sessions you've marked as Interested on the DesertCodeCamp.com website. In order to mark sessions as Interested, log in to your account, or create a new account, at DesertCodeCamp.com. When viewing the list of sessions, click the \"More Info\" button, review the session, and if interested, set \"I want to attend this\" to \"Yes\" and click \"Save\". Once you've marked some sessions as Interested, return here and tap the Refresh button."
 
         //Presenting Sessions View
         presentingPreLoginString =

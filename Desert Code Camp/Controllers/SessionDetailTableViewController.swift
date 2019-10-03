@@ -32,7 +32,6 @@ class SessionDetailTableViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 44
         tableView.tableFooterView = UIView(frame: .zero)
         
         do {
@@ -47,10 +46,9 @@ class SessionDetailTableViewController: UITableViewController {
             print("An error occured: \(error)")
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(sessionAction))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(sendTweetFromAction))
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "Cell"), let label = cell.textLabel {
-            print("name font size: \(label.font.pointSize)")
             cellFontSize = label.font.pointSize
         }
 
@@ -58,36 +56,26 @@ class SessionDetailTableViewController: UITableViewController {
         loadPresenters()
     }
     
-    @objc func sessionAction() {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: "Add to My Schedule", style: .default, handler: { _ in
-            print("add to my schedule tapped")
-            self.session.inMySchedule = true
-            self.sessions[0] = self.session
-            self.saveContext()
-        }))
-        alertController.addAction(UIAlertAction(title: "Post on Twitter", style: .default, handler: { _ in
-            print("tweet tapped")
-            let message = "In session: " + self.session.name + " by " + self.presenters[0].name + " (" + self.presenters[0].twitterHandle + ") at "
-            self.sendTweet(message: message)
-        }))
-        alertController.addAction(UIAlertAction(title: "Email Presenter", style: .default, handler: { _ in
-            print("email presenter tapped")
-            self.sendEmail(email: self.presentersEmail)
-        }))
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
-            print("cancel tapped")
-        }))
-        self.present(alertController, animated: true)
+    @objc func sendTweetFromAction() {
+        var share = "In session: " + self.session.name + " by " + self.presenters[0].name + " (" + self.presenters[0].twitterHandle + ")"
+        if let hashTag = UserDefaults.standard.string(forKey: "hashTag") {
+            share += " at " + hashTag
+        }
+        sendTweet(message: share)
+    }
+    
+    func sendTweetFromCell(message: String) {
+        var share = ""
+        if let hashTag = UserDefaults.standard.string(forKey: "hashTag") {
+            share = message + hashTag
+        }
+        sendTweet(message: share)
     }
     
     func sendTweet(message: String) {
-        if let hashTag = UserDefaults.standard.string(forKey: "hashTag") {
-            let share = [message + hashTag]
-            let activityViewController = UIActivityViewController(activityItems: share, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-        }
+        let activityViewController = UIActivityViewController(activityItems: [message], applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
     // MARK: - Core Data Fetching
@@ -103,11 +91,36 @@ class SessionDetailTableViewController: UITableViewController {
             sessions = try container.viewContext.fetch(request)
             session = sessions[0]
             cleanSessionAbstract(abstract: session.abstract)
-            print("session: \(sessions[0].name)")
             tableView.reloadData()
+            setupToolbar()
         } catch {
             print("Fetch failed 😭")
         }
+    }
+    
+    func setupToolbar() {
+        navigationController?.isToolbarHidden = false
+        if session.inMySchedule {
+            let removeButton = UIBarButtonItem(title: "Remove from My Schedule", style: .plain, target: self, action: #selector(removeFromMySchedule))
+            removeButton.tintColor = .red
+            toolbarItems = [removeButton]
+        } else {
+            toolbarItems = [UIBarButtonItem(title: "Add to My Schedule", style: .plain, target: self, action: #selector(addToMySchedule))]
+        }
+    }
+    
+    @objc func addToMySchedule() {
+        self.session.inMySchedule = true
+        self.sessions[0] = self.session
+        self.saveContext()
+        setupToolbar()
+    }
+    
+    @objc func removeFromMySchedule() {
+        self.session.inMySchedule = false
+        self.sessions[0] = self.session
+        self.saveContext()
+        setupToolbar()
     }
     
     func cleanSessionAbstract(abstract: String) {
@@ -118,7 +131,6 @@ class SessionDetailTableViewController: UITableViewController {
         .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil) {
             sessionAbstract.append(attributedString)
             sessionAbstract.addAttributes(attributes, range: NSRange(location: 0, length: sessionAbstract.length))
-            print("abstract: \(sessionAbstract)")
         }
     }
     
@@ -166,7 +178,6 @@ extension SessionDetailTableViewController: MFMailComposeViewControllerDelegate 
             mail.setToRecipients([email])
             present(mail, animated: true)
         } else {
-            print("can't send email")
             let alertController = UIAlertController(title: "No Email", message: "You do not have an email account setup on this device. Please configure one in order to send an email.", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             present(alertController, animated: true)
@@ -231,7 +242,6 @@ extension SessionDetailTableViewController {
                 switch indexPath.row {
                 case 0:
                     label.text = session.name
-                    print("name font size: \(label.font.pointSize)")
                 case 1:
                     if sessionAbstract.length > 0 {
                         label.attributedText = sessionAbstract
@@ -251,6 +261,7 @@ extension SessionDetailTableViewController {
                 }
                 label.text = presenterArray[indexPath.row]
             case 2:
+                cell.accessoryType = .none
                 switch indexPath.row {
                 case 0:
                     label.text = session.room
@@ -270,7 +281,7 @@ extension SessionDetailTableViewController {
         if indexPath.section == 1 {
             let row = indexPath.row
             if row == 2 || row % 3 == 2 {
-                sendTweet(message: presenterArray[indexPath.row] + "  ")
+                sendTweetFromCell(message: presenterArray[indexPath.row] + "  ")
             }
             if row == 1 || row % 3 == 1 {
                 sendEmail(email: presenterArray[indexPath.row])

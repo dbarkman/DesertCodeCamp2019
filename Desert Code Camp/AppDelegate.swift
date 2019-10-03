@@ -14,8 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         
+//        print("Documents Directory: ", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not Found!")
+
         DispatchQueue.main.async {
             APIServices.getAllData()
         }
@@ -24,8 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let containerViewController = ContainerViewController()
         window!.rootViewController = containerViewController
         window!.makeKeyAndVisible()
-
-//        print("Documents Directory: ", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not Found!")
 
         return true
     }

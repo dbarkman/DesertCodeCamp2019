@@ -173,15 +173,16 @@ extension ContainerViewController: SidePanelViewControllerDelegate {
             tracksTimesTableViewController = UIStoryboard.tracksTimesTableViewController()
             tracksTimesTableViewController.delegate = self
             tracksTimesTableViewController.filterType = "times"
+            tracksTimesTableViewController.filterButtonTitle = "by Tracks"
             centerNavigationController.setViewControllers([tracksTimesTableViewController], animated: false)
         case 4:
-            print("Sessions I Marked as Interested")
+            print("Sessions I Want to Attend")
             sessionsTableViewController = UIStoryboard.sessionsTableViewController()
             sessionsTableViewController.isRootViewController = true
             sessionsTableViewController.delegate = self
             sessionsTableViewController.filterType = "tracks"
             sessionsTableViewController.selectedView = "interestedSessions"
-            sessionsTableViewController.filter = "Interested Sessions"
+            sessionsTableViewController.filter = "I Want to Attend"
             centerNavigationController.setViewControllers([sessionsTableViewController], animated: false)
         case 5:
             print("Sessions I'm Presenting")
@@ -190,7 +191,7 @@ extension ContainerViewController: SidePanelViewControllerDelegate {
             sessionsTableViewController.delegate = self
             sessionsTableViewController.filterType = "tracks"
             sessionsTableViewController.selectedView = "presentingSessions"
-            sessionsTableViewController.filter = "Presenting Sessions"
+            sessionsTableViewController.filter = "I'm Presenting"
             centerNavigationController.setViewControllers([sessionsTableViewController], animated: false)
         case 6:
             print("My Schedule")

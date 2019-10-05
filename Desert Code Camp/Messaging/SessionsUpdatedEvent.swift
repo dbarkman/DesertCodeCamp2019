@@ -11,6 +11,4 @@ import Foundation
 extension Notification.Name {
     
     static let sessionsUpdated = Notification.Name("sessionsUpdated")
-    
-    static let needLogin = Notification.Name("needLogin")
 }

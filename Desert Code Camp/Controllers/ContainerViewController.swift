@@ -28,6 +28,10 @@
 
 import UIKit
 
+protocol ContainerViewControllerDelegate {
+    func logout()
+}
+
 class ContainerViewController: UIViewController {
     
     enum SlideOutState {
@@ -39,6 +43,7 @@ class ContainerViewController: UIViewController {
     var tracksTimesTableViewController: TracksTimesTableViewController!
     var sessionsTableViewController: SessionsTableViewController!
     var aboutViewController: AboutViewController!
+    var delegate: ContainerViewControllerDelegate?
 
     var currentState: SlideOutState = .bothCollapsed {
         didSet {
@@ -48,7 +53,7 @@ class ContainerViewController: UIViewController {
     }
     var leftViewController: SidePanelViewController?
     
-    let centerPanelExpandedOffset: CGFloat = 90
+    let centerPanelExpandedOffset: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -180,6 +185,7 @@ extension ContainerViewController: SidePanelViewControllerDelegate {
             sessionsTableViewController = UIStoryboard.sessionsTableViewController()
             sessionsTableViewController.isRootViewController = true
             sessionsTableViewController.delegate = self
+            delegate = sessionsTableViewController
             sessionsTableViewController.filterType = "tracks"
             sessionsTableViewController.selectedView = "interestedSessions"
             sessionsTableViewController.filter = "I Want to Attend"
@@ -189,6 +195,7 @@ extension ContainerViewController: SidePanelViewControllerDelegate {
             sessionsTableViewController = UIStoryboard.sessionsTableViewController()
             sessionsTableViewController.isRootViewController = true
             sessionsTableViewController.delegate = self
+            delegate = sessionsTableViewController
             sessionsTableViewController.filterType = "tracks"
             sessionsTableViewController.selectedView = "presentingSessions"
             sessionsTableViewController.filter = "I'm Presenting"
@@ -232,12 +239,30 @@ extension ContainerViewController: SidePanelViewControllerDelegate {
             centerNavigationController.setViewControllers([aboutViewController], animated: false)
         case 11:
             print("Logout")
-            UserDefaults.standard.set(nil, forKey: "login")
-            let alertController = UIAlertController(title: "Logout", message: "Your DesertCodeCamp.com login has been removed.", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            present(alertController, animated: true)
+            if  UserDefaults.standard.string(forKey: "login") != nil { //login is populated
+                UserDefaults.standard.set(nil, forKey: "login")
+                let alertController = UIAlertController(title: "Logout", message: "Your DesertCodeCamp.com login has been removed.", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
+                    self.delegate?.logout()
+                }))
+                present(alertController, animated: true)
+            } else {
+                showLoginAlert()
+            }
         default:
             print("problems")
         }
+    }
+
+    func showLoginAlert() {
+        let alertController = UIAlertController(title: "Enter Username", message: "This Username is used to request sessions from the API you've marked as \"I want to attend\" or you are presenting. A username is not necessary for just browsing the sessions or setting up a schedule in the \"My Schedule\" screen.", preferredStyle: .alert)
+        alertController.addTextField()
+        let submitAction = UIAlertAction(title: "Submit", style: .default) { [unowned alertController] _ in
+            let login = alertController.textFields![0].text
+            UserDefaults.standard.set(login, forKey: "login")
+        }
+        alertController.addAction(submitAction)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alertController, animated: true)
     }
 }

@@ -18,7 +18,6 @@ class SessionDetailTableViewController: UITableViewController {
     var sessionPredicate: NSPredicate?
     var sessionName = String()
     var sessionId = Int16()
-    var session = Sessions()
     var sessions = [Sessions]()
     var presenters = [Presenters]()
     var presenterArray = [String]()
@@ -57,7 +56,7 @@ class SessionDetailTableViewController: UITableViewController {
     }
     
     @objc func sendTweetFromAction() {
-        var share = "In session: " + self.session.name + " by " + self.presenters[0].name + " (" + self.presenters[0].twitterHandle + ")"
+        var share = "In session: " + self.sessions[0].name + " by " + self.presenters[0].name + " (" + self.presenters[0].twitterHandle + ")"
         if let hashTag = UserDefaults.standard.string(forKey: "hashTag") {
             share += " at " + hashTag
         }
@@ -89,8 +88,7 @@ class SessionDetailTableViewController: UITableViewController {
 
         do {
             sessions = try container.viewContext.fetch(request)
-            session = sessions[0]
-            cleanSessionAbstract(abstract: session.abstract)
+            cleanSessionAbstract(abstract: sessions[0].abstract)
             tableView.reloadData()
             setupToolbar()
         } catch {
@@ -100,7 +98,7 @@ class SessionDetailTableViewController: UITableViewController {
     
     func setupToolbar() {
         navigationController?.isToolbarHidden = false
-        if session.inMySchedule {
+        if sessions[0].inMySchedule {
             let removeButton = UIBarButtonItem(title: "Remove from My Schedule", style: .plain, target: self, action: #selector(removeFromMySchedule))
             removeButton.tintColor = .red
             toolbarItems = [removeButton]
@@ -110,15 +108,15 @@ class SessionDetailTableViewController: UITableViewController {
     }
     
     @objc func addToMySchedule() {
-        self.session.inMySchedule = true
-        self.sessions[0] = self.session
+        self.sessions[0].inMySchedule = true
+        self.sessions[0] = self.sessions[0]
         self.saveContext()
         setupToolbar()
     }
     
     @objc func removeFromMySchedule() {
-        self.session.inMySchedule = false
-        self.sessions[0] = self.session
+        self.sessions[0].inMySchedule = false
+        self.sessions[0] = self.sessions[0]
         self.saveContext()
         setupToolbar()
     }
@@ -147,7 +145,7 @@ class SessionDetailTableViewController: UITableViewController {
             for presenter in presenters {
                 presenterArray.append(presenter.name)
                 presenterArray.append(presenter.email)
-                presenterArray.append(presenter.twitterHandle)
+                presenterArray.append(presenter.twitterHandle == "@" ? "" : presenter.twitterHandle)
             }
             tableView.reloadData()
         } catch {
@@ -241,32 +239,33 @@ extension SessionDetailTableViewController {
             case 0:
                 switch indexPath.row {
                 case 0:
-                    label.text = session.name
+                    label.text = sessions[0].name
                 case 1:
                     if sessionAbstract.length > 0 {
                         label.attributedText = sessionAbstract
                     } else {
-                        label.text = session.abstract
+                        label.text = sessions[0].abstract
                     }
                 default:
                     label.text = ""
                 }
             case 1:
-                cell.selectionStyle = .default
-                if indexPath.row == 2 || indexPath.row % 3 == 2 {
+                if (indexPath.row == 2 || indexPath.row % 3 == 2) && presenterArray[indexPath.row].count > 0 {
                     cell.accessoryType = .disclosureIndicator
+                    cell.selectionStyle = .default
                 }
-                if indexPath.row == 1 || indexPath.row % 3 == 1 {
+                if (indexPath.row == 1 || indexPath.row % 3 == 1) && presenterArray[indexPath.row].count > 0 {
                     cell.accessoryType = .disclosureIndicator
+                    cell.selectionStyle = .default
                 }
                 label.text = presenterArray[indexPath.row]
             case 2:
                 cell.accessoryType = .none
                 switch indexPath.row {
                 case 0:
-                    label.text = session.room
+                    label.text = "Room: " + sessions[0].room
                 case 1:
-                    label.text = session.time
+                    label.text = sessions[0].time
                 default:
                     label.text = ""
                 }
@@ -280,10 +279,10 @@ extension SessionDetailTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             let row = indexPath.row
-            if row == 2 || row % 3 == 2 {
+            if (row == 2 || row % 3 == 2) && presenterArray[indexPath.row].count > 0 {
                 sendTweetFromCell(message: presenterArray[indexPath.row] + "  ")
             }
-            if row == 1 || row % 3 == 1 {
+            if (row == 1 || row % 3 == 1) && presenterArray[indexPath.row].count > 0 {
                 sendEmail(email: presenterArray[indexPath.row])
             }
         }

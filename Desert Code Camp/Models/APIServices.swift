@@ -110,8 +110,6 @@ class APIServices {
                     getMyInterestedInSessionsByLoginHandler(json, response)
                 })
             }
-        } else {
-            NotificationCenter.default.post(name: .needLogin, object: nil)
         }
     }
     
@@ -127,8 +125,6 @@ class APIServices {
                     getMyPresentationsByLoginHandler(json, response)
                 })
             }
-        } else {
-            NotificationCenter.default.post(name: .needLogin, object: nil)
         }
     }
 }

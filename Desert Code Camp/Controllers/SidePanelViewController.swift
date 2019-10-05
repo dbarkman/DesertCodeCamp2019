@@ -46,7 +46,13 @@ class SidePanelViewController: UITableViewController {
             hashTag = tempHashTag + " "
             conferenceTitle = tempConferenceTitle
         }
-        options = [conferenceTitle, "All " + hashTag + "Sessions", " > by Tracks", " > by Times", "Sessions I Want to Attend", "Sessions I'm Presenting", "My Schedule", "When and Where", "Code of Conduct", "About", "Credits", "Logout"]
+        
+        var loginText = "Login"
+        if  UserDefaults.standard.string(forKey: "login") != nil {
+            loginText = "Logout"
+        }
+        
+        options = [conferenceTitle, "All " + hashTag + "Sessions", " > by Tracks", " > by Times", "Sessions I Want to Attend", "Sessions I'm Presenting", "My Schedule", "When and Where", "Code of Conduct", "About", "Credits", loginText]
 
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44

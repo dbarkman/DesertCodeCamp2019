@@ -26,7 +26,8 @@ class SessionsTableViewController : UITableViewController {
     var sessionsDictionary = [String: [Sessions]]()
     var sessions = [Sessions]()
     var sessionsJson = [JSON]()
-    var sessionIdArray = [Int16]()
+    var interestedSessionIdArray = [Int16]()
+    var presentingSessionIdArray = [Int16]()
     var delegate: SessionsTableViewControllerDelegate?
     var isRootViewController = false
     var selectedView = "trackSessions"
@@ -35,8 +36,6 @@ class SessionsTableViewController : UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("in sessions list")
         
         if isRootViewController {
             navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(openMenu))
@@ -47,7 +46,7 @@ class SessionsTableViewController : UITableViewController {
 
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: .zero)
-
+        
         do {
             try container = PersistentContainer.container(name: "DesertCodeCamp")
             container.loadPersistentStores { storeDescription, error in
@@ -62,18 +61,13 @@ class SessionsTableViewController : UITableViewController {
 
         title = filter
         
-        NotificationCenter.default.addObserver(self, selector: #selector(needLogin(notification:)), name: .needLogin, object: nil)
-        
         navigationController?.isToolbarHidden = false
         toolbarItems = [UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshView))]
-
-        checkView()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-        refreshView()
+        checkView()
     }
     
     @objc func sendTweet() {
@@ -89,6 +83,7 @@ class SessionsTableViewController : UITableViewController {
     @objc func refreshView() {
         sessionsDictionary.removeAll()
         keys.removeAll()
+        tableView.reloadData()
         checkView()
     }
     
@@ -107,8 +102,10 @@ class SessionsTableViewController : UITableViewController {
         }
     }
     
-    @objc func needLogin(notification: NSNotification) {
-        print("need login, showing alert")
+    func needLogin() {
+        sessionsDictionary.removeAll()
+        keys.removeAll()
+        tableView.reloadData()
         checkAlternateViews()
     }
 
@@ -119,7 +116,6 @@ class SessionsTableViewController : UITableViewController {
     // MARK: - Core Data Fetching
 
     func loadSessions() {
-        print("loading sessions")
         sessionsDictionary.removeAll()
         keys.removeAll()
         let request = Sessions.createFetchRequest()
@@ -133,11 +129,11 @@ class SessionsTableViewController : UITableViewController {
                 self.sessionPredicate = NSPredicate(format: "isApproved == true AND time == %@", filter)
             }
         case "interestedSessions":
-            self.sessionPredicate = NSPredicate(format: "sessionId IN %@", sessionIdArray)
+            self.sessionPredicate = NSPredicate(format: "isApproved == true AND sessionId IN %@", interestedSessionIdArray)
         case "presentingSessions":
-            self.sessionPredicate = NSPredicate(format: "sessionId IN %@", sessionIdArray)
+            self.sessionPredicate = NSPredicate(format: "isApproved == true AND sessionId IN %@", presentingSessionIdArray)
         case "mySchedule":
-            self.sessionPredicate = NSPredicate(format: "inMySchedule == true")
+            self.sessionPredicate = NSPredicate(format: "isApproved == true AND inMySchedule == true")
         default:
             print("problems")
         }
@@ -193,38 +189,42 @@ class SessionsTableViewController : UITableViewController {
     }
 
     func loadInterestedSessions() {
-        print("loading interested sessions")
-        APIServices.getMyInterestedInSessionsByLogin(getMyInterestedInSessionsByLoginHandler: { json, response in
-            self.sessionsJson = json.arrayValue
-            for session in self.sessionsJson {
-                if let sessionId = session["SessionId"].int16 {
-                    self.sessionIdArray.append(sessionId)
+        if  UserDefaults.standard.string(forKey: "login") != nil {
+            APIServices.getMyInterestedInSessionsByLogin(getMyInterestedInSessionsByLoginHandler: { json, response in
+                self.sessionsJson = json.arrayValue
+                for session in self.sessionsJson {
+                    if let sessionId = session["SessionId"].int16 {
+                        self.interestedSessionIdArray.append(sessionId)
+                    }
                 }
-            }
-            DispatchQueue.main.async {
-                self.loadSessions()
-            }
-        })
+                DispatchQueue.main.async {
+                    self.loadSessions()
+                }
+            })
+        } else {
+            needLogin()
+        }
     }
     
     func loadPresentingSessions() {
-        print("loading presenting sessions")
-        APIServices.getMyPresentationsByLogin(getMyPresentationsByLoginHandler: { json, response in
-            self.sessionsJson = json.arrayValue
-            for session in self.sessionsJson {
-                if let sessionId = session["SessionId"].int16 {
-                    self.sessionIdArray.append(sessionId)
+        if  UserDefaults.standard.string(forKey: "login") != nil {
+            APIServices.getMyPresentationsByLogin(getMyPresentationsByLoginHandler: { json, response in
+                self.sessionsJson = json.arrayValue
+                for session in self.sessionsJson {
+                    if let sessionId = session["SessionId"].int16 {
+                        self.presentingSessionIdArray.append(sessionId)
+                    }
                 }
-            }
-            DispatchQueue.main.async {
-                self.loadSessions()
-            }
-        })
+                DispatchQueue.main.async {
+                    self.loadSessions()
+                }
+            })
+        } else {
+            needLogin()
+        }
     }
     
     func checkAlternateViews() {
-        print("checking views")
-        print("dictionary count: \(sessionsDictionary.count)")
         let aboutViewText = AboutViewText()
         var message = String()
         var showLogin = false
@@ -264,26 +264,21 @@ class SessionsTableViewController : UITableViewController {
     }
     
     func showAlert(message: String, showLogin: Bool) {
-        print("showing a message")
         var cancelTitle = "Cancel"
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
         if showLogin {
             alertController.addAction(UIAlertAction(title: "Enter Username", style: .default, handler: { _ in
-                print("login tapped")
                 self.showLoginAlert()
             }))
         }
         if !showLogin {
             cancelTitle = "OK"
         }
-        alertController.addAction(UIAlertAction(title: cancelTitle, style: .cancel, handler: { _ in
-            print("cancel tapped")
-        }))
+        alertController.addAction(UIAlertAction(title: cancelTitle, style: .cancel, handler: nil))
         self.present(alertController, animated: true)
     }
     
     func showLoginAlert() {
-        print("showing login")
         let alertController = UIAlertController(title: "Enter Username", message: nil, preferredStyle: .alert)
         alertController.addTextField()
         let submitAction = UIAlertAction(title: "Submit", style: .default) { [unowned alertController] _ in
@@ -369,5 +364,12 @@ extension SessionsTableViewController {
         }
         tableView.deleteRows(at: indexPaths, with: .fade)
         refreshView()
+    }
+}
+
+extension SessionsTableViewController: ContainerViewControllerDelegate {
+    func logout() {
+        print("doing logout delegate stuff")
+        needLogin()
     }
 }

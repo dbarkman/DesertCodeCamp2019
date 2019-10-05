@@ -31,9 +31,9 @@ class AboutViewText {
 
         //Interested Sessions View
         interestedPreLoginString =
-            "This screen will display sessions you've marked as Interested on the DesertCodeCamp.com website. In order to view those sessions, tap the \"Enter Username\" button below and enter your DesertCodeCamp.com username on the popup screen."
+            "This screen will display sessions you've marked as I Want to Attend on the DesertCodeCamp.com website. In order to view those sessions, tap the \"Enter Username\" button below and enter your DesertCodeCamp.com username on the popup screen."
         interestedString =
-            "This screen will display sessions you've marked as Interested on the DesertCodeCamp.com website. In order to mark sessions as Interested, log in to your account, or create a new account, at DesertCodeCamp.com. When viewing the list of sessions, click the \"More Info\" button, review the session, and if interested, set \"I want to attend this\" to \"Yes\" and click \"Save\". Once you've marked some sessions as Interested, return here and tap the Refresh button."
+            "This screen will display sessions you've marked as I Want to Attend on the DesertCodeCamp.com website. In order to mark sessions as Want to Attend, log in to your account, or create a new account, at DesertCodeCamp.com. When viewing the list of sessions, click the \"More Info\" button, review the session, and if interested, set \"I want to attend this\" to \"Yes\" and click \"Save\". Once you've marked some sessions as Want to Attend, return here and tap the Refresh button."
 
         //Presenting Sessions View
         presentingPreLoginString =
@@ -41,7 +41,7 @@ class AboutViewText {
         presentingAcceptingString =
             "This screen will display sessions you've volunteered to present. In order to volunteer to present a session, log in to your account, or create a new account, at DesertCodeCamp.com. When viewing the list of sessions, fill out the form at the top of the page, with all the details for your suggested session. A Desert Code Camp coordinator will then contact you."
         presentingNotAcceptingString =
-            "This screen will display sessions you've volunteered to present. The upcoming conference is no longer accepting new sessions, but some sessions still need presenters. In order to volunteer to present a session, log in to your account, or create a new account, at DesertCodeCamp.com. When viewing the list of sessions, look for sessions marked with the \"Needs a Presenter\" icon. Click the \"More Info\" button, review the session, and if interested, set \"I want to teach this\" to \"Yes\" and click \"Save\". A Desert Code Camp coordinator will then contact you."
+            "This screen will display sessions you've volunteered to present. The upcoming conference is no longer accepting new sessions, but some sessions still need presenters. In order to volunteer to present a session, log in to your account or create a new account, at DesertCodeCamp.com. When viewing the list of sessions, look for sessions marked with the \"Needs a Presenter\" icon. Click the \"More Info\" button, review the session, and if interested, set \"I want to teach this\" to \"Yes\" and click \"Save\". A Desert Code Camp coordinator will then contact you."
 
         //My Schedule View
         myScheduleString =
@@ -127,7 +127,7 @@ class AboutViewText {
         }
         
         let creditsContent =
-            "<p>App Developed by:</p> <p>David Barkman @ Dbarkman LLC</p> <p>dbarkman.com @cybler</p><br><p>App QA by:</p> <p>Maritza Lomba</p>"
+            "<p>App Developed by:</p><p>David Barkman @ Dbarkman LLC</p><p>dbarkman.com @cybler</p><br><p>App QA by:</p><p>Maritza Lomba</p><p>linkedin.com/in/mlomba</p>"
         let creditsData = Data(creditsContent.utf8)
         if let attributedString = try? NSAttributedString(data: creditsData, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil) {
             creditsAttributedString.append(attributedString)

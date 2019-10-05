@@ -369,7 +369,6 @@ extension SessionsTableViewController {
 
 extension SessionsTableViewController: ContainerViewControllerDelegate {
     func logout() {
-        print("doing logout delegate stuff")
         needLogin()
     }
 }

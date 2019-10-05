@@ -159,29 +159,24 @@ extension ContainerViewController: TracksTimesTableViewControllerDelegate, Sessi
 
 extension ContainerViewController: SidePanelViewControllerDelegate {
     func didSelectOption(_ option: String, _ row: Int) {
-        print("Option selected (container): \(option), row: \(row)")
         collapseSidePanels()
         let aboutViewsText = AboutViewText()
         switch row {
         case 1:
-            print("All Sessions")
             tracksTimesTableViewController = UIStoryboard.tracksTimesTableViewController()
             tracksTimesTableViewController.delegate = self
             centerNavigationController.setViewControllers([tracksTimesTableViewController], animated: false)
         case 2:
-            print(" > by Tracks")
             tracksTimesTableViewController = UIStoryboard.tracksTimesTableViewController()
             tracksTimesTableViewController.delegate = self
             centerNavigationController.setViewControllers([tracksTimesTableViewController], animated: false)
         case 3:
-            print(" > by Times")
             tracksTimesTableViewController = UIStoryboard.tracksTimesTableViewController()
             tracksTimesTableViewController.delegate = self
             tracksTimesTableViewController.filterType = "times"
             tracksTimesTableViewController.filterButtonTitle = "by Tracks"
             centerNavigationController.setViewControllers([tracksTimesTableViewController], animated: false)
         case 4:
-            print("Sessions I Want to Attend")
             sessionsTableViewController = UIStoryboard.sessionsTableViewController()
             sessionsTableViewController.isRootViewController = true
             sessionsTableViewController.delegate = self
@@ -191,7 +186,6 @@ extension ContainerViewController: SidePanelViewControllerDelegate {
             sessionsTableViewController.filter = "I Want to Attend"
             centerNavigationController.setViewControllers([sessionsTableViewController], animated: false)
         case 5:
-            print("Sessions I'm Presenting")
             sessionsTableViewController = UIStoryboard.sessionsTableViewController()
             sessionsTableViewController.isRootViewController = true
             sessionsTableViewController.delegate = self
@@ -201,7 +195,6 @@ extension ContainerViewController: SidePanelViewControllerDelegate {
             sessionsTableViewController.filter = "I'm Presenting"
             centerNavigationController.setViewControllers([sessionsTableViewController], animated: false)
         case 6:
-            print("My Schedule")
             sessionsTableViewController = UIStoryboard.sessionsTableViewController()
             sessionsTableViewController.isRootViewController = true
             sessionsTableViewController.delegate = self
@@ -210,35 +203,30 @@ extension ContainerViewController: SidePanelViewControllerDelegate {
             sessionsTableViewController.filter = "My Schedule"
             centerNavigationController.setViewControllers([sessionsTableViewController], animated: false)
         case 7:
-            print("When and Where")
             aboutViewController = UIStoryboard.aboutViewController()
             aboutViewController.delegate = self
             aboutViewController.viewTitle = option
             aboutViewController.content = aboutViewsText.whenWhereAttributedString
             centerNavigationController.setViewControllers([aboutViewController], animated: false)
         case 8:
-            print("Code of Conduct")
             aboutViewController = UIStoryboard.aboutViewController()
             aboutViewController.delegate = self
             aboutViewController.viewTitle = option
             aboutViewController.content = aboutViewsText.codeOfConductAttributedString
             centerNavigationController.setViewControllers([aboutViewController], animated: false)
         case 9:
-            print("About")
             aboutViewController = UIStoryboard.aboutViewController()
             aboutViewController.delegate = self
             aboutViewController.viewTitle = option
             aboutViewController.content = aboutViewsText.aboutAttributedString
             centerNavigationController.setViewControllers([aboutViewController], animated: false)
         case 10:
-            print("Credits")
             aboutViewController = UIStoryboard.aboutViewController()
             aboutViewController.delegate = self
             aboutViewController.viewTitle = option
             aboutViewController.content = aboutViewsText.creditsAttributedString
             centerNavigationController.setViewControllers([aboutViewController], animated: false)
         case 11:
-            print("Logout")
             if  UserDefaults.standard.string(forKey: "login") != nil { //login is populated
                 UserDefaults.standard.set(nil, forKey: "login")
                 let alertController = UIAlertController(title: "Logout", message: "Your DesertCodeCamp.com login has been removed.", preferredStyle: .alert)

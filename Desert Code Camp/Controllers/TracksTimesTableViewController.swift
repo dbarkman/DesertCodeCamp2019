@@ -38,7 +38,8 @@ class TracksTimesTableViewController: UITableViewController {
         do {
             try container = PersistentContainer.container(name: "DesertCodeCamp")
             container.loadPersistentStores { storeDescription, error in
-                self.container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+//                self.container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy //local storage overwrites incoming updates
+                self.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy //incoming updates overwrites local storage
                 if let error = error {
                     print("Unresolved error \(error)")
                 }
@@ -86,7 +87,7 @@ class TracksTimesTableViewController: UITableViewController {
     @objc func refreshTracksTimes(_ sender: Any) {
         filters.removeAll()
         loadFilters()
-        self.tracksTimesRefreshControl.endRefreshing()
+        tracksTimesRefreshControl.endRefreshing()
     }
 
     @objc func changeFilter() {
